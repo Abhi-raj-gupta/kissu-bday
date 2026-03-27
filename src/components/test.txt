@@ -1,0 +1,681 @@
+import React, { useState } from "react";
+import "./PureCake.css";
+
+function PureCake() {
+  const [blown, setBlown] = useState(false);
+  const [cut, setCut] = useState(false);
+
+  const [knifeDrag, setKnifeDrag] = useState(false);
+  const [knifePos, setKnifePos] = useState({ x: 500, y: 250 });
+
+  const [sliceDrag, setSliceDrag] = useState(false);
+  const [slicePos, setSlicePos] = useState({ x: 600, y: 300 });
+
+  const handleMove = (e) => {
+    // 🔪 Knife Drag
+    if (knifeDrag) {
+      const x = e.clientX - 60;
+      const y = e.clientY - 10;
+      setKnifePos({ x, y });
+
+      const cake = document.querySelector(".cake-area");
+      const rect = cake.getBoundingClientRect();
+
+      if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
+        setCut(true);
+        setKnifeDrag(false);
+      }
+    }
+
+    // 🍰 Slice Drag
+    if (sliceDrag) {
+      setSlicePos({
+        x: e.clientX - 40,
+        y: e.clientY - 80,
+      });
+    }
+  };
+
+  return (
+    <div
+      className="container"
+      onMouseMove={handleMove}
+      onMouseUp={() => {
+        setKnifeDrag(false);
+        setSliceDrag(false);
+      }}
+    >
+      <h1>🎉 Happy Birthday ❤️</h1>
+
+      <div className="cake-area">
+        {/* 🎂 Cake */}
+        <div className="cake">
+          <div className="cream"></div>
+          <div className="drip"></div>
+          <div className="body"></div>
+
+          {/* Candles */}
+          <div className="candles">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="candle" style={{ left: `${20 + i * 15}%` }}>
+                {!blown && <div className="flame"></div>}
+              </div>
+            ))}
+          </div>
+
+          {/* Cut Gap */}
+          {cut && <div className="cut-gap"></div>}
+        </div>
+
+        {/* 🔪 Knife (NEW LOOK) */}
+        {blown && !cut && (
+          <div
+            className="knife"
+            onMouseDown={() => setKnifeDrag(true)}
+            style={{
+              left: knifePos.x,
+              top: knifePos.y,
+              position: "fixed",
+            }}
+          >
+            <div className="blade"></div>
+            <div className="handle">
+              <span className="dot dot1"></span>
+              <span className="dot dot2"></span>
+            </div>
+          </div>
+        )}
+
+        {/* 🍰 Slice */}
+        {cut && (
+          <div
+            className="slice"
+            onMouseDown={() => setSliceDrag(true)}
+            style={{
+              left: slicePos.x,
+              top: slicePos.y,
+              position: "fixed",
+            }}
+          >
+            <div className="slice-cream"></div>
+            <div className="slice-body"></div>
+          </div>
+        )}
+      </div>
+
+      {!blown && (
+        <button onClick={() => setBlown(true)}>Blow Candles 💨</button>
+      )}
+    </div>
+  );
+}
+
+export default PureCake;
+
+
+
+
+
+
+
+
+
+body {
+  margin: 0;
+  background: #0f172a;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 🎂 Cake Area */
+.cake-area {
+  position: relative;
+  width: 420px;
+  height: 260px;
+  margin: auto;
+}
+
+/* 🎂 Cake */
+.cake {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cream {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 60px;
+  background: #fff0f5;
+  border-radius: 50%;
+}
+
+.drip {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: 60px;
+  background: #4b2e2e;
+  border-radius: 0 0 50% 50%;
+}
+
+.body {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(#ff69b4, #ff1493);
+  border-radius: 20px;
+}
+
+/* 🕯️ Candles */
+.candles {
+  position: absolute;
+  top: -40px;
+  width: 100%;
+}
+
+.candle {
+  position: absolute;
+  width: 10px;
+  height: 50px;
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 5px,
+    red 5px,
+    red 10px
+  );
+}
+
+.flame {
+  width: 10px;
+  height: 18px;
+  background: radial-gradient(circle, yellow, orange, red);
+  border-radius: 50%;
+  position: absolute;
+  top: -18px;
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  50% { transform: scale(1.3); }
+}
+
+/* 🔪 NEW REALISTIC KNIFE */
+.knife {
+  position: fixed;
+  width: 160px;
+  height: 40px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+}
+
+/* Blade */
+.blade {
+  width: 100px;
+  height: 12px;
+  background: linear-gradient(135deg, #eee, #aaa);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  box-shadow: 0 0 6px rgba(255,255,255,0.6);
+}
+
+/* Handle */
+.handle {
+  width: 60px;
+  height: 20px;
+  background: black;
+  border-radius: 20px;
+  margin-left: 5px;
+  position: relative;
+}
+
+.handle::before {
+  content: "";
+  position: absolute;
+  right: -10px;
+  width: 10px;
+  height: 20px;
+  background: orange;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+}
+
+.dot1 {
+  left: 10px;
+  top: 7px;
+}
+
+.dot2 {
+  left: 35px;
+  top: 7px;
+}
+
+/* 🔪 Cut Gap */
+.cut-gap {
+  position: absolute;
+  top: 80px;
+  left: 55%;
+  width: 80px;
+  height: 150px;
+  background: #0f172a;
+  border-radius: 5px;
+}
+
+/* 🍰 Slice */
+.slice {
+  position: absolute;
+  width: 80px;
+  height: 150px;
+  animation: popOut 0.6s ease forwards;
+}
+
+.slice-body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ff69b4, #ff1493);
+  border-radius: 6px;
+}
+
+.slice-cream {
+  position: absolute;
+  top: -20px;
+  width: 100%;
+  height: 30px;
+  background: #fff0f5;
+  border-radius: 50%;
+}
+
+@keyframes popOut {
+  0% {
+    transform: translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(40px) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  background: #ff69b4;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+body {
+  margin: 0;
+  background: #0f172a;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 🎂 Cake Area */
+.cake-area {
+  position: relative;
+  width: 420px;
+  height: 260px;
+  margin: auto;
+}
+
+/* 🎂 Cake */
+.cake {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cream {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 60px;
+  background: #fff0f5;
+  border-radius: 50%;
+}
+
+.drip {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: 60px;
+  background: #4b2e2e;
+  border-radius: 0 0 50% 50%;
+}
+
+.body {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(#ff69b4, #ff1493);
+  border-radius: 20px;
+}
+
+/* 🕯️ Candles */
+.candles {
+  position: absolute;
+  top: -40px;
+  width: 100%;
+}
+
+.candle {
+  position: absolute;
+  width: 10px;
+  height: 50px;
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 5px,
+    red 5px,
+    red 10px
+  );
+}
+
+.flame {
+  width: 10px;
+  height: 18px;
+  background: radial-gradient(circle, yellow, orange, red);
+  border-radius: 50%;
+  position: absolute;
+  top: -18px;
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  50% { transform: scale(1.3); }
+}
+
+/* 🔪 NEW REALISTIC KNIFE */
+.knife {
+  position: fixed;
+  width: 160px;
+  height: 40px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+}
+
+/* Blade */
+.blade {
+  width: 100px;
+  height: 12px;
+  background: linear-gradient(135deg, #eee, #aaa);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  box-shadow: 0 0 6px rgba(255,255,255,0.6);
+}
+
+/* Handle */
+.handle {
+  width: 60px;
+  height: 20px;
+  background: black;
+  border-radius: 20px;
+  margin-left: 5px;
+  position: relative;
+}
+
+.handle::before {
+  content: "";
+  position: absolute;
+  right: -10px;
+  width: 10px;
+  height: 20px;
+  background: orange;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+}
+
+.dot1 {
+  left: 10px;
+  top: 7px;
+}
+
+.dot2 {
+  left: 35px;
+  top: 7px;
+}
+
+/* 🔪 Cut Gap */
+.cut-gap {
+  position: absolute;
+  top: 80px;
+  left: 55%;
+  width: 80px;
+  height: 150px;
+  background: #0f172a;
+  border-radius: 5px;
+}
+
+/* 🍰 Slice */
+.slice {
+  position: absolute;
+  width: 80px;
+  height: 150px;
+  animation: popOut 0.6s ease forwards;
+}
+
+.slice-body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ff69b4, #ff1493);
+  border-radius: 6px;
+}
+
+.slice-cream {
+  position: absolute;
+  top: -20px;
+  width: 100%;
+  height: 30px;
+  background: #fff0f5;
+  border-radius: 50%;
+}
+
+@keyframes popOut {
+  0% {
+    transform: translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(40px) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  background: #ff69b4;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* 💥 PARTY BOMB (BOTTOM CORNERS) */
+.bomb {
+  position: fixed;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.bomb.left { left: 0; }
+.bomb.right { right: 0; }
+
+/* 💥 HEAVY PARTICLE BLAST */
+.bomb::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: red;
+  border-radius: 100%;
+  animation: bombBlast 1s ease-out forwards;
+
+  box-shadow:
+    50px -50px yellow,
+    -50px -60px blue,
+    100px -80px pink,
+    -100px -90px green,
+    150px -120px orange,
+    -150px -130px purple,
+    200px -150px cyan,
+    -200px -160px lime,
+    250px -180px red,
+    -250px -200px yellow,
+    300px -220px pink,
+    -300px -240px blue,
+    350px -260px orange,
+    -350px -280px green,
+    400px -300px cyan,
+    -400px -320px purple;
+}
+
+@keyframes bombBlast {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-600px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+
+
+
+
+import React from "react";
+import "./Welcome.css";
+
+// 📸 IMPORT YOUR IMAGES
+import img1 from "../assets/img1.jpg";
+import img2 from "../assets/img2.jpg";
+import img3 from "../assets/img3.jpg";
+
+function Welcome({ next }) {
+
+  const images = [img1, img2, img3];
+
+  return (
+    <div className="welcome-container">
+
+      {/* 💖 Hearts */}
+      <div className="hearts">
+        {[...Array(40)].map((_, i) => (
+          <span key={i}></span>
+        ))}
+      </div>
+
+      <h1 className="title">Happy Birthday My Love 🎂</h1>
+
+      {/* 📱 Instagram Style Cards */}
+      <div className="story-container">
+        {images.map((img, index) => (
+          <div className={`story-card card-${index}`} key={index}>
+            <img src={img} alt="memory" className="uploaded-img" />
+          </div>
+        ))}
+      </div>
+
+      {/* 💌 ENTER BUTTON */}
+      <button className="enter-btn" onClick={next}>
+        💌 Enter
+      </button>
+    </div>
+  );
+}
+
+export default Welcome;
+
+
+welcome css
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.center {
+  margin-top: 100px;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  background: white;
+  color: #ff4b7d;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* HEART ANIMATION */
+.heart {
+  position: fixed;
+  color: red;
+  font-size: 20px;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}

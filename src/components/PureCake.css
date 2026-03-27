@@ -1,0 +1,275 @@
+
+
+body {
+  margin: 0;
+  background: #0f172a;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 🎂 Cake Area */
+.cake-area {
+  position: relative;
+  width: 420px;
+  height: 260px;
+  margin: auto;
+}
+
+/* 🎂 Cake */
+.cake {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cream {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 60px;
+  background: #fff0f5;
+  border-radius: 50%;
+}
+
+.drip {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: 60px;
+  background: #4b2e2e;
+  border-radius: 0 0 50% 50%;
+}
+
+.body {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(#ff69b4, #ff1493);
+  border-radius: 20px;
+}
+
+/* 🕯️ Candles */
+.candles {
+  position: absolute;
+  top: -40px;
+  width: 100%;
+}
+
+.candle {
+  position: absolute;
+  width: 10px;
+  height: 50px;
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 5px,
+    red 5px,
+    red 10px
+  );
+}
+
+.flame {
+  width: 10px;
+  height: 18px;
+  background: radial-gradient(circle, yellow, orange, red);
+  border-radius: 50%;
+  position: absolute;
+  top: -18px;
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  50% { transform: scale(1.3); }
+}
+
+/* 🔪 NEW REALISTIC KNIFE */
+.knife {
+  position: fixed;
+  width: 160px;
+  height: 40px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+}
+
+/* Blade */
+.blade {
+  width: 100px;
+  height: 12px;
+  background: linear-gradient(135deg, #eee, #aaa);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  box-shadow: 0 0 6px rgba(255,255,255,0.6);
+}
+
+/* Handle */
+.handle {
+  width: 60px;
+  height: 20px;
+  background: black;
+  border-radius: 20px;
+  margin-left: 5px;
+  position: relative;
+}
+
+.handle::before {
+  content: "";
+  position: absolute;
+  right: -10px;
+  width: 10px;
+  height: 20px;
+  background: orange;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+}
+
+.dot1 {
+  left: 10px;
+  top: 7px;
+}
+
+.dot2 {
+  left: 35px;
+  top: 7px;
+}
+
+/* 🔪 Cut Gap */
+.cut-gap {
+  position: absolute;
+  top: 80px;
+  left: 55%;
+  width: 80px;
+  height: 150px;
+  background: #0f172a;
+  border-radius: 5px;
+}
+
+/* 🍰 Slice */
+.slice {
+  position: absolute;
+  width: 80px;
+  height: 150px;
+  animation: popOut 0.6s ease forwards;
+}
+
+.slice-body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ff69b4, #ff1493);
+  border-radius: 6px;
+}
+
+.slice-cream {
+  position: absolute;
+  top: -20px;
+  width: 100%;
+  height: 30px;
+  background: #fff0f5;
+  border-radius: 50%;
+}
+
+@keyframes popOut {
+  0% {
+    transform: translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(40px) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  background: #ff69b4;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}/* 💥 PARTY BOMB (BOTTOM CORNERS) */
+.bomb {
+  position: fixed;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.bomb.left { left: 0; }
+.bomb.right { right: 0; }
+
+/* 💥 HEAVY + WIDE + COLORFUL PARTICLE BLAST */
+.bomb::before,
+.bomb::after {
+  content: "";
+  position: absolute;
+  width: 14px;   /* 🔥 bigger particles */
+  height: 14px;
+  border-radius: 50%;
+  animation: bombBlast 1.4s ease-out forwards;
+}
+
+/* 🔥 First layer */
+.bomb::before {
+  background: red;
+  box-shadow:
+    80px -80px yellow,
+    -80px -100px blue,
+    150px -120px pink,
+    -150px -140px green,
+    220px -180px orange,
+    -220px -200px purple,
+    300px -250px cyan,
+    -300px -270px lime,
+    380px -300px red,
+    -380px -320px yellow,
+    450px -350px pink,
+    -450px -370px blue;
+}
+
+/* 🔥 Second layer (more particles = heavy blast) */
+.bomb::after {
+  background: cyan;
+  box-shadow:
+    60px -120px gold,
+    -60px -140px violet,
+    130px -200px lime,
+    -130px -220px orange,
+    200px -260px red,
+    -200px -280px yellow,
+    280px -320px pink,
+    -280px -340px cyan,
+    360px -380px green,
+    -360px -400px purple,
+    420px -420px orange,
+    -420px -440px lime;
+}
+
+/* 💥 ANIMATION (BIG SPREAD) */
+@keyframes bombBlast {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-900px) scale(0.3); /* 🔥 higher spread */
+    opacity: 0;
+  }
+}
