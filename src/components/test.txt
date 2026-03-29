@@ -679,3 +679,212 @@ button {
     opacity: 0;
   }
 }
+
+
+
+Love letter
+
+import React, { useState } from "react";
+import "./LoveLetter.css";
+
+function Envelope() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="envelope-container">
+
+      {!open ? (
+        <div
+          className="envelope"
+          onClick={() => setOpen(true)}
+        >
+          <div className="flap"></div>
+          <div className="body1"></div>
+          <div className="seal">❤</div>
+        </div>
+      ) : (
+        <div className="letter">
+          <div className="letter-page">
+            <h1>My Love 💖</h1>
+            <p>
+              You are the most beautiful part of my life.  
+              Every moment with you feels like a dream.  
+              I love you more than words can express ❤️  
+              <br /><br />
+              You make my world brighter and happier 🌍✨  
+              <br /><br />
+              I promise to stay with you forever 💕  
+              <br /><br />
+              <b>Forever Yours ❤️</b>
+            </p>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
+export default Envelope;
+
+
+CSS of love letter
+/* FULL SCREEN CENTER */
+.envelope-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffd6e0;
+}
+
+/* 🔥 BIG ENVELOPE */
+.envelope {
+  position: relative;
+  width: 95%;
+  max-width: 650px;   /* 👈 width increased */
+  height: 420px;      /* 👈 height increased */
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+/* BODY */
+.body1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ff9bb3;
+  border-radius: 14px;
+  z-index: 1;
+}
+
+/* FLAP */
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 14px;
+  height: 210px;  /* 👈 increased with envelope */
+
+  background: #ff7a9c;
+
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+
+  z-index: 2;
+
+  transform-origin: top;
+  transition: transform 0.6s ease;
+}
+
+/* OPEN EFFECT */
+.envelope.open .flap {
+  transform: rotateX(-180deg);
+}
+
+/* SEAL */
+.seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 80px;   /* 👈 bigger */
+  height: 80px;
+  border-radius: 50%;
+  
+  background: #ff4d6d;
+  color: white;
+  font-size: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 3;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* LETTER */
+.letter {
+  width: 95%;
+  max-width: 650px;
+  height: 480px;
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+
+  animation: slideUp 0.7s ease;
+}
+
+/* TEXT */
+.letter-page {
+  text-align: center;
+}
+
+.letter-page h1 {
+  color: #ff4d6d;
+  font-size: 28px;
+}
+
+.letter-page p {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* BUTTON */
+button {
+  margin-top: 30px;
+  padding: 12px 25px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ANIMATION */
+@keyframes slideUp {
+  from {
+    transform: translateY(250px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* 📜 BIG LETTER (FULL SCREEN FEEL) */
+.letter {
+  width: 90%;
+  max-width: 900px;   /* 👈 बड़ा */
+  height: 75vh;       /* 👈 almost full screen */
+  
+  background: white;
+  border-radius: 18px;
+  padding: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+
+  animation: slideUp 0.8s ease;
+}
+
+/* TEXT */
+.letter-page h1 {
+  font-size: 36px;   /* 👈 bigger */
+}
+
+.letter-page p {
+  font-size: 20px;   /* 👈 bigger */
+  line-height: 1.8;
+}
+
