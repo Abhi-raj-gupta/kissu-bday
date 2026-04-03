@@ -40,3 +40,132 @@ button {
     opacity: 0;
   }
 }
+/* 🎶 Music Button Style */
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+
+  font-size: 22px;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #ff4b5c, #ff758c);
+  color: white;
+
+  box-shadow: 0 0 15px rgba(255, 75, 92, 0.6);
+  transition: all 0.3s ease;
+}
+
+/* 🔥 Hover effect */
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 💖 Playing animation */
+.music-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+/* 💫 Pulse animation */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 75, 92, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 75, 92, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 75, 92, 0.5);
+  }
+}/* 🎶 Music Button */
+.music-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 24px;
+  cursor: grab;
+  background: linear-gradient(135deg, #ff4b5c, #ff85a2);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 75, 92, 0.6);
+  transition: all 0.3s ease;
+}
+
+.music-btn:active {
+  cursor: grabbing;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 💓 Heartbeat */
+.heartbeat {
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.2); }
+  60% { transform: scale(1); }
+}
+
+/* 💫 Glow */
+.music-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px rgba(255, 105, 135, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(255, 20, 147, 0.9); }
+  100% { box-shadow: 0 0 10px rgba(255, 105, 135, 0.5); }
+}
+
+/* 🌸 Background heartbeat */
+body.music-on {
+  animation: bgBeat 1s infinite;
+}
+
+@keyframes bgBeat {
+  0% { background-color: #ffe4ec; }
+  50% { background-color: #ffb6c1; }
+  100% { background-color: #ffc0cb; }
+}
+/* 💖 HEART TRAIL (STRAIGHT + DARK RED) */
+.heart {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+
+  background: #ff1744; /* 🔥 dark red */
+
+  /* ❌ REMOVE ROTATION COMPLETELY */
+  transform: none;
+
+  animation: floatUp 1s ease-out forwards;
+
+  /* ❤️ proper heart shape using clip-path */
+  clip-path: path(
+    "M8 14s-6-4.35-6-8a3.5 3.5 0 0 1 6-2.5A3.5 3.5 0 0 1 14 6c0 3.65-6 8-6 8z"
+  );
+}
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-70px) scale(1.4);
+  }
+
+
+}

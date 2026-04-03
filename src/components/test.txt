@@ -888,3 +888,267 @@ button {
   line-height: 1.8;
 }
 
+
+
+
+Journey js  
+import React, { useState } from "react";
+import "./Journey.css";
+
+const messages = [
+  "Our journey started ❤️",
+  "First smile 😊",
+  "First talk 💬",
+  "First memory 📸",
+  "Best day ever 🌸",
+  "Lots of fun 😂",
+  "Little fights 😅",
+  "Strong bond 💕",
+  "Forever together 🤝",
+  "We made it ❤️🔥"
+];
+
+function Journey() {
+  const [step, setStep] = useState(0);
+  const [showMsg, setShowMsg] = useState(false);
+  const [finish, setFinish] = useState(false);
+
+  const positions = [
+    { x: 10, y: 15 },
+    { x: 30, y: 11 },
+    { x: 55, y: 9 },
+    { x: 70, y: 14 },
+    { x: 55, y: 48 },
+    { x: 30, y: 53 },
+    { x: 17.4, y: 65 },
+    { x: 34, y: 84 },
+    { x: 54, y: 86.2 },
+    { x: 75, y: 90.7 }
+  ];
+
+  const moveCar = () => {
+    setStep((prev) => {
+      if (prev < positions.length - 1) {
+        setShowMsg(true);
+        return prev + 1;
+      } else {
+        setFinish(true);
+        return prev;
+      }
+    });
+  };
+
+  return (
+    <div className="journey-container">
+
+      {/* 🛣️ SAME TRACK (ONLY CENTERED) */}
+      <svg 
+        className="track-svg" 
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid meet"
+      >
+
+        <path
+          d="
+            M -30 15
+            C 40 10, 70 0, 115 25
+            S 60 40, 10 50
+            S 0 80, 35 80
+            S 70 85, 100 85
+          "
+          stroke="#111"
+          strokeWidth="12"
+          fill="transparent"
+          strokeLinecap="round"
+        />
+
+        <path
+          d="
+            M -30 15
+            C 40 10, 70 0, 115 25
+            S 60 40, 10 50
+            S 0 80, 35 80
+            S 70 85, 100 85
+          "
+          stroke="white"
+          strokeWidth="3"
+          fill="transparent"
+        />
+
+        <path
+          d="
+            M -30 15
+            C 40 10, 70 0, 115 25
+            S 60 40, 10 50
+            S 0 80, 35 80
+            S 70 85, 100 85
+          "
+          stroke="yellow"
+          strokeWidth="2"
+          fill="transparent"
+          strokeDasharray="5 5"
+        />
+
+      </svg>
+
+      {/* 🔴 POINTS */}
+      {positions.map((pos, i) => (
+        <div
+          key={i}
+          className={`point ${i <= step ? "active" : ""}`}
+          style={{
+            left: `${pos.x}%`,
+            top: `${pos.y}%`
+          }}
+        />
+      ))}
+
+      {/* 🚗 CAR */}
+      <div
+        className="car"
+        style={{
+          left: `${positions[step].x}%`,
+          top: `${positions[step].y}%`
+        }}
+      >
+        🚗
+      </div>
+
+      {/* 💬 POPUP */}
+      {showMsg && !finish && (
+        <div className="popup" onClick={() => setShowMsg(false)}>
+          {messages[step]}
+        </div>
+      )}
+
+      {/* 🎉 FINISH */}
+      {finish && (
+        <div className="finish-screen">
+          <h1>🏁 Finished 🎉</h1>
+          <p>You are my best journey ❤️</p>
+          <div className="blast">💥 💖 💥 💖 💥</div>
+        </div>
+      )}
+
+      {/* GO BUTTON */}
+      {!finish && (
+        <button className="move-btn" onClick={moveCar}>
+          GO 🚗
+        </button>
+      )}
+
+    </div>
+  );
+}
+
+export default Journey;
+
+
+Journey css
+.journey-container {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ✅ CENTER FIX */
+.track-svg {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  width: 120%;
+  height: 108%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* CAR */
+.car {
+  position: absolute;
+  font-size: 32px;
+  transform: translate(-50%, -50%);
+  transition: all 0.7s ease;
+  z-index: 3;
+}
+
+/* POINTS */
+.point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 2px solid red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.point.active {
+  background: red;
+  box-shadow: 0 0 12px red;
+}
+
+/* BUTTON */
+.move-btn {
+  position: absolute;
+  bottom: 40px;
+  left: 90%;
+  transform: translateX(-50%);
+  padding: 12px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* POPUP */
+.popup {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 15px 25px;
+  border-radius: 20px;
+  font-size: 18px;
+}
+
+/* FINISH */
+.finish-screen {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+
+.blast {
+  font-size: 30px;
+  animation: blast 1s infinite alternate;
+}
+
+@keyframes blast {
+  from { transform: scale(1); }
+  to { transform: scale(1.5); }
+}
+
+
+
+
+
+{/* 👇 Pages */}
+      {page === 0 && <Welcome next={next} />}
+      {/* {page === 1 && <PureCake next={next} />} */}
+      {page === 1 && <Surprise next={next} />}
+      {page === 2 && <Timeline next={next} />}
+      {page === 3 && <Gallery next={next} />}
+      {page === 4 && <LoveLetter next={next} />}
+      {page === 5 && <PhotoMatchGame next={next} />}
+      {page === 6 && <PureCake next={next} />}
+      {page === 7 && <FinalPage />}

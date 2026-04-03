@@ -2,12 +2,12 @@ import React from "react";
 import "./Gallery.css";
 
 // 👉 apne photos yaha import kar
-import pic1 from "../assets/m1.jpg";
-import pic2 from "../assets/m2.jpg";
-import pic3 from "../assets/m3.jpg";
-import pic4 from "../assets/m4.jpg";
-import pic5 from "../assets/m5.jpg";
-import pic6 from "../assets/m6.jpg";
+import pic1 from "../assets/g1.jpg";
+import pic2 from "../assets/g2.jpg";
+import pic3 from "../assets/g3.jpg";
+import pic4 from "../assets/g4.jpg";
+import pic5 from "../assets/g5.jpg";
+import pic6 from "../assets/g6.jpg";
 
 function Memory({ next }) {  // pass a function from App.js for next page
   const photos = [
