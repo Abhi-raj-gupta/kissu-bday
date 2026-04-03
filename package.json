@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "birthday-site",
   "version": "0.1.0",
   "private": true,
@@ -36,5 +37,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+=======
+  "dependencies": {
+    "canvas-confetti": "^1.9.4"
+>>>>>>> 97361c5a9a2789eb4dd2a8fc893ad485ce18da57
   }
 }
