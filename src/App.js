@@ -145,14 +145,16 @@ function App() {
 
       {/* 👇 Pages */}
       {page === 0 && <Welcome next={next} />}
-      {/* {page === 1 && <PureCake next={next} />} */}
-      {page === 1&& <Gallery next={next} />}
-      {page === 2&& <Timeline next={next} />}
-      {page === 3&& <Surprise next={next} />}
+      {page === 1 && <PureCake next={next} />} 
+
+      {page === 2&& <Gallery next={next} />}
+      {page === 3&& <Timeline next={next} />}
+      {page === 6&& <Surprise next={next} />}
       {page === 4&& <LoveLetter next={next} />}
-      {page === 5&& <PhotoMatchGame next={next} />}
-      {page === 6&& <PureCake next={next} />}
-      {page === 7&& <FinalPage />}
+      {/* {page === 5&& <PhotoMatchGame next={next} />} */}
+      {/* {page === 6&& <PureCake next={next} />} */}
+      {page === 5&& <FinalPage />}
+      {page === 7&& <PhotoMatchGame next={next} />}
       
     </div>
   );

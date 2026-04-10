@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./PureCake.css";
 
-function PureCake() {
+// 🎵 SONGS
+import song1 from "../assets/song.mp3";
+import song2 from "../assets/song2.mp3";
+
+function PureCake({next}) {
   const [blown, setBlown] = useState(false);
   const [cut, setCut] = useState(false);
   const [blast, setBlast] = useState(false);
@@ -18,11 +22,21 @@ function PureCake() {
     y: window.innerHeight / 2,
   });
 
+  const [sliceStage, setSliceStage] = useState(0);
+  const [showNext, setShowNext] = useState(false);
+
+  const [leftText, setLeftText] = useState(false);
+  const [rightText, setRightText] = useState(false);
+
+  // 🎵 AUDIO REFS
+  const audioRef1 = useRef(null);
+  const audioRef2 = useRef(null);
+
   const handleMove = (e) => {
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    // 🔪 Knife Drag
+    // 🔪 Knife
     if (knifeDrag) {
       const x = clientX - 60;
       const y = clientY - 10;
@@ -40,12 +54,32 @@ function PureCake() {
       }
     }
 
-    // 🍰 Slice Drag
+    // 🍰 Slice
     if (sliceDrag) {
-      setSlicePos({
-        x: clientX - 40,
-        y: clientY - 80,
-      });
+      const x = clientX - 40;
+      const y = clientY - 80;
+
+      setSlicePos({ x, y });
+
+      if (
+        sliceStage === 0 &&
+        x < window.innerWidth * 0.25 &&
+        y < window.innerHeight * 0.4
+      ) {
+        setSliceStage(1);
+        setLeftText(true);
+      }
+
+      if (
+        sliceStage === 1 &&
+        x > window.innerWidth * 0.75 &&
+        y < window.innerHeight * 0.4
+      ) {
+        setSliceStage(2);
+        setSliceDrag(false);
+        setShowNext(true);
+        setRightText(true);
+      }
     }
   };
 
@@ -63,10 +97,45 @@ function PureCake() {
         setSliceDrag(false);
       }}
     >
+      {/* 🎵 SONG 1 */}
+      <audio ref={audioRef1} src={song1} loop autoPlay />
+
+      {/* 🎵 SONG 2 */}
+      <audio ref={audioRef2} src={song2} loop />
+
+      {/* 🎯 BACKGROUND */}
+      {cut && (
+        <>
+          <div
+            className="bg-left"
+            style={{
+              backgroundImage:
+                "url(" + process.env.PUBLIC_URL + "/assets/left.png)",
+            }}
+          ></div>
+
+          <div
+            className="bg-right"
+            style={{
+              backgroundImage:
+                "url(" + process.env.PUBLIC_URL + "/assets/right.png)",
+            }}
+          ></div>
+        </>
+      )}
+
+      {/* TEXT */}
+      {leftText && (
+        <div className="taste-text left-text">Very tasty cake 😋</div>
+      )}
+
+      {rightText && (
+        <div className="taste-text right-text">So delicious ❤️</div>
+      )}
+
       <h1>🎉 Happy Birthday ❤️</h1>
 
       <div className="cake-area">
-        {/* 🎂 Cake */}
         <div className="cake">
           <div className="cream"></div>
           <div className="drip"></div>
@@ -104,7 +173,7 @@ function PureCake() {
         )}
 
         {/* 🍰 Slice */}
-        {cut && (
+        {cut && sliceStage !== 2 && (
           <div
             className="slice"
             onMouseDown={() => setSliceDrag(true)}
@@ -113,6 +182,8 @@ function PureCake() {
               left: slicePos.x,
               top: slicePos.y,
               position: "fixed",
+              transform: sliceStage === 1 ? "scale(0.5)" : "scale(1)",
+              transition: "0.3s",
             }}
           >
             <div className="slice-cream"></div>
@@ -121,7 +192,7 @@ function PureCake() {
         )}
       </div>
 
-      {/* 💥 Party Bomb */}
+      {/* 💥 Blast */}
       {blast && (
         <>
           <div className="bomb left"></div>
@@ -129,8 +200,33 @@ function PureCake() {
         </>
       )}
 
+      {/* 💨 BLOW BUTTON */}
       {!blown && (
-        <button onClick={() => setBlown(true)}>Blow Candles 💨</button>
+        <button
+          onClick={() => {
+            setBlown(true);
+
+            // ❌ STOP SONG 1
+            if (audioRef1.current) {
+              audioRef1.current.pause();
+              audioRef1.current.currentTime = 0;
+            }
+
+            // ▶️ START SONG 2
+            if (audioRef2.current) {
+              audioRef2.current.play();
+            }
+          }}
+        >
+          Blow Candles 💨
+        </button>
+      )}
+
+      {/* NEXT */}
+      {showNext && (
+        <button className="enter-btn" onClick={next}>
+        💌 Enter
+      </button>
       )}
     </div>
   );

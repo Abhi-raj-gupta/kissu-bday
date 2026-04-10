@@ -227,13 +227,85 @@ body {
   }
 }
 
-/* Button */
-button {
-  margin-top: 20px;
-  padding: 12px 20px;
+
+/* ENTER BUTTON */
+.enter-btn {
+  margin-top: 40px;
+  padding: 12px 30px;
+  font-size: 20px;
+  border-radius: 30px;
   border: none;
-  background: #ff69b4;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
   color: white;
-  border-radius: 8px;
   cursor: pointer;
+  z-index: 2;
+  transition: 0.3s;
+}
+
+.enter-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 65, 108, 0.8);
+}
+
+/* KEEP YOUR FULL CSS SAME */
+
+/* 👤 Person Images */
+.person {
+  position: fixed;
+  bottom: 0;
+  width: 120px;
+  z-index: 100;
+}
+
+.left-person {
+  left: 10px;
+}
+
+.right-person {
+  right: 10px;
+}
+
+.bg-left,
+.bg-right {
+  position: fixed;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.bg-left {
+  left: 0;
+}
+
+.bg-right {
+  right: 0;
+}
+
+.taste-text {
+  position: fixed;
+  bottom: 120px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  padding: 6px 10px;
+  border-radius: 10px;
+  z-index: 200;
+  animation: fadeIn 0.5s ease;
+}
+
+.left-text {
+  left: 20px;
+}
+
+.right-text {
+  right: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
